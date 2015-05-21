@@ -1,0 +1,510 @@
+a:link, a:visited
+{
+	text-decoration: none;
+	color: #535353;
+}
+a:hover, a:active
+{
+	text-decoration: none;
+	color: #888;
+}
+
+.interactive_btn
+{
+	cursor: pointer;
+}
+
+img
+{
+	border: none;
+}
+
+.clear_both
+{
+	clear: both;
+}
+
+body
+{
+	background: black url(../i/bg.jpg) repeat-x center top;
+	text-align: center;
+	margin: 0 0;
+	padding: 0 0;
+	/*font: 12px/16px 'Montserrat', sans-serif;*/
+	font-family: 'Lato', sans-serif;
+	font-size: 12px/16px;
+	color: #434343;
+}
+
+#top_bar
+{
+	position: relative;
+	background: black url(../i/top_bar.png) repeat-x center top;
+	text-align: center;
+	margin: 0 0;
+	padding: 0 0;
+	
+	width: 100%;
+	min-width: 960px;
+	height: 68px;
+}
+
+#wall_of_beer_logo_s
+{
+	background: transparent url(../i/wall_of_beer_logo_s.png) no-repeat left top;
+	
+	position: relative;
+	float: left;
+	margin: 22px 0 0 30px;
+	width: 118px;
+	height: 24px;
+}
+
+#btn_recent
+{
+	background: transparent url(../i/btn_recent.png) no-repeat left top;
+	
+	position: relative;
+	float: left;
+	margin: 13px 0 0 30px;
+	width: 100px;
+	height: 36px;
+}
+
+#btn_rating
+{
+	background: transparent url(../i/btn_rating.png) no-repeat left top;
+	
+	position: relative;
+	float: left;
+	margin: 13px 0 0 0px;
+	width: 99px;
+	height: 36px;
+}
+
+#btn_popular
+{
+	background: transparent url(../i/btn_popular.png) no-repeat left top;
+	
+	position: relative;
+	float: left;
+	margin: 13px 0 0 0px;
+	width: 101px;
+	height: 36px;
+}
+
+#search_cont
+{
+	background: transparent url(../i/search_bg.png) no-repeat left top;
+	
+	position: relative;
+	float: left;
+	margin: 13px 0 0 30px;
+	width: 235px;
+	height: 36px;
+}
+
+#btn_get_app
+{
+	background: transparent url(../i/btn_get_app.png) no-repeat left top;
+	
+	position: relative;
+	float: right;
+	margin: 13px 30px 0 0px;
+	width: 158px;
+	height: 36px;
+}
+
+#search_input
+{
+	font: 14px 'Montserrat', sans-serif;
+	background: none;
+	border: none;
+	height: 36px;
+	width: 205px;
+	margin-left: 15px;
+	text-align: left;
+	color: #535353;
+	outline: none;
+}
+		
+.rounded_corners
+{
+	behavior: url(css/border-radius.htc); /* IE */
+	-moz-border-radius: 8px; /* Firefox */
+	-webkit-border-radius: 8px; /* Safari, Chrome */
+	border-radius: 8px; /* universal */
+}
+
+.rounded_corners_inner
+{
+	behavior: url(css/border-radius.htc); /* IE */
+	-moz-border-radius: 6px; /* Firefox */
+	-webkit-border-radius: 6px; /* Safari, Chrome */
+	border-radius: 6px; /* universal */
+}
+
+.beeer_frame
+{
+	width: 225px;
+	height: 292px;
+	border: 2px solid #323232;
+	float: left;
+	margin: 11px 11px;
+	cursor: pointer;
+	display: none;
+}	
+
+.lable_cont
+{
+	background-color: rgba(0,0,0,.75);
+	position: relative;
+	margin-top: 185px;
+	width: 100%;
+	height: 76px;
+	text-align: left;
+	padding: 0 0;
+}
+
+.star_rating, #beeers
+{
+	list-style: none;
+	margin: 0 0;
+	padding: 0 0;
+}
+
+.star_rating li
+{
+	position: relative;
+	float: left;
+	margin: 3px 1px 0 0;
+	width: 19px;
+	height: 18px;
+}
+
+.rating_off
+{
+	background: transparent url(../i/star_unselected.png) no-repeat left top;
+}
+.rating_on
+{
+	background: transparent url(../i/star_selected.png) no-repeat left top;
+}
+
+.star_rating
+{
+	position: absolute;
+	top: 46px;
+	left: 12px;
+}
+
+#beeer_detail .rating_off
+{
+	background: transparent url(../i/star_unselected_large.png) no-repeat left top;
+	
+}
+#beeer_detail .rating_on
+{
+	background: transparent url(../i/star_selected_large.png) no-repeat left top;
+}
+#beeer_detail .star_rating li
+{
+	position: relative;
+	float: left;
+	margin: 0 2px 0 0;
+	width: 28px;
+	height: 27px;
+}
+
+#beeer_detail .star_rating
+{
+	position: absolute;
+	top: 18px;
+	left: 16px;
+}
+
+
+h3
+{
+	position: absolute;
+	top: -7px;
+	left: 12px;
+	display: block;
+	font-size: 18px;
+	font-weight: 400;
+	color: #d1d1d1;
+}
+
+h4
+{
+	position: absolute;
+	top: 10px;
+	left: 12px;
+	font-size: 15px;
+	font-weight: 300;
+	color: #6d6867;
+}
+
+.img_cont
+{	width: 225px;
+	height: 292px;
+	position: absolute;
+	overflow: hidden;
+}
+.img_cont img
+{
+	height: 100%;
+	width: auto;
+}
+
+.fifty_per_opacity 
+{
+  /* IE 8 */
+  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=50)";
+
+  /* IE 5-7 */
+  filter: alpha(opacity=50);
+
+  /* Netscape */
+  -moz-opacity: 0.5;
+
+  /* Safari 1.x */
+  -khtml-opacity: 0.5;
+
+  /* Good browsers */
+  opacity: 0.5;
+}
+
+.drop-shadow {
+     -webkit-box-shadow:0 4px 10px rgba(0, 0, 0, 0.73), 0 0 40px rgba(0, 0, 0, 0.1) inset;
+       -moz-box-shadow:0 4px 10px rgba(0, 0, 0, 0.73), 0 0 40px rgba(0, 0, 0, 0.1) inset;
+            box-shadow:0 4px 10px rgba(0, 0, 0, 0.73), 0 0 40px rgba(0, 0, 0, 0.1) inset;
+}
+.curved:before {
+    -webkit-box-shadow:0 0 15px rgba(0,0,0,0.6);
+    -moz-box-shadow:0 0 15px rgba(0,0,0,0.6);
+    box-shadow:0 0 15px rgba(0,0,0,0.6);
+    -moz-border-radius:10px / 100px;
+    border-radius:10px / 100px;
+}
+.curved-hz-1:before {
+    -moz-border-radius:100px / 10px;
+    border-radius:100px / 10px;
+}
+
+
+
+#beeer_detail
+{
+	width: 330px;
+	position: absolute;
+	top: 100px;
+	left:50%;
+	margin-left: -165px;
+	background: #eeeee6 url(../i/texture_paper.jpg) repeat top left;
+	font-size: 18px;
+	letter-spacing: 1px;
+	text-align: left;
+	display: none;
+}
+
+#beeer_detail_name,#beeer_detail_brewery,#beeer_detail_type,#beeer_detail_rating,#beeer_detail_stats,#beeer_detail_serving,#beeer_detail_wheel,#beeer_detail_photo,#beeer_detail_desc
+{
+	min-height: 70px;
+	height: auto;
+	border-top: 1px solid #fff;
+	border-bottom: 1px solid #959595;
+	line-height: 70px;
+	position: relative;
+	padding-left: 20px;
+}
+
+#beeer_detail_stats
+{
+	padding: 0 0 0 2px;
+	position: relative;
+	text-align: center;
+}
+#beeer_detail_stats div
+{
+	position: relative;
+	float: left;
+	height: 70px;
+	max-width: 25%;
+	min-width: 24%;
+}
+#beeer_detail_ibu, #beeer_detail_og
+{
+	border-left: 1px solid #959595;
+	border-right: 1px solid #fff;
+}
+
+#beeer_detail_abv
+{
+	border-right: 1px solid #fff;
+}
+
+#beeer_detail_tg
+{
+	border-left: 1px solid #959595;
+}
+
+h5
+{
+	display: block;
+	font-size: 20px;
+	font-weight: 400;
+	margin: 5px 0 0 0;
+	padding: 0 0;
+	line-height: 35px
+}
+
+h6
+{
+	font-size: 18px;
+	font-weight: 300;
+	/* color: #959595; */
+	margin: 0 0;
+	padding: 0 0;
+	line-height: 20px
+}
+
+h7
+{
+	font-size: 16px;
+	font-weight: 300;
+	letter-spacing: .5px;
+	/* color: #959595; */
+	margin: 0 0;
+	padding: 0 0;
+	line-height: 19px;
+}
+
+#beeer_detail_serving
+{
+	padding: 0 0 0 2px;
+	position: relative;
+	text-align: center;
+}
+
+#beeer_detail_serving_bottle, #beeer_detail_serving_can, #beeer_detail_serving_draft, #beeer_detail_serving_growler, #beeer_detail_serving_cask
+{
+	
+	position: relative;
+	float: left;
+	height: 70px;
+	max-width: 19%;
+	min-width: 20%;
+	line-height: 30px;
+}
+
+.sq_radio
+{
+	position: relative;
+	height: 18px;
+	width: 17px;
+	margin-left: auto;
+	margin-right: auto;
+	margin-top: 12px;
+}
+
+.sq_radio_selected
+{
+	background: transparent url(../i/sq_radio_selected.png) no-repeat top left;
+}
+
+.sq_radio_unselected
+{
+	background: transparent url(../i/sq_radio_unselected.png) no-repeat top left;
+}
+
+h8
+{
+	color: #bfbfb9;
+	font-weight: 300;
+}
+
+#beeer_detail_wheel
+{
+	height: 330px;
+}
+
+#beer_labels
+{
+	position: absolute;
+	top: 10px;
+	left: 5px;
+	height: 321px;
+	width: 321px;
+	background: transparent url(../i/Beer_Wheel_Labels.png) no-repeat top left;
+}
+#beer_lattice
+{
+	position: absolute;
+	top: 52px;
+	left: 44px;
+	height: 238px;
+	width: 238px;
+	background: transparent url(../i/Beer_Wheel_Lattice.png) no-repeat top left;
+}
+#beer_graph
+{
+	position: absolute;
+	top: 52px;
+	left: 44px;
+	height: 238px;
+	width: 238px;
+}
+
+#beeer_wheel_dots
+{
+	list-style: none;
+	padding: 0 0;
+	margin: 0 0;
+	display: block;
+	position: absolute;
+	top: 52px;
+	left: 44px;
+	height: 238px;
+	width: 238px;
+}
+
+#beeer_wheel_dots li
+{
+	position: absolute;
+	background: transparent url(../i/Beer_Wheel_Dot.png) no-repeat top left;
+	height: 7px;
+	width: 7px;
+	display: block;
+}
+
+#beeer_detail_photo
+{
+	height: 330px;
+	margin: 0 0;
+	padding: 0 0;
+	overflow: hidden;
+}
+#beeer_detail_photo img
+{
+	height: 330px;
+	width:auto;
+}
+
+#beeer_detail_desc
+{
+	line-height: 20px;
+	font-weight: 300;
+	padding: 12px 12px;
+}
+
+#beeer_detail_close {
+	background: transparent url(../i/btn_close.png) no-repeat top left;	
+	position: absolute;
+	width: 37px;
+	height: 37px;
+	right: -15px;
+	top: -15px;
+	z-index: 2;
+	cursor: pointer;
+}

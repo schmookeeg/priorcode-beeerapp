@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+		<title>Beeer App | Available on iOS and Android devices</title>
+		<meta name="description" content="Drink beer? Get Beeer, the new beer journaling app that lets you keep track of all the amazing beers you've discovered. Share your best finds with friends or the entire Beeer community. How many beers can you collect?">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		
+		<meta property="og:title" content="Beeer App | Available on iOS and Android devices" />
+		<meta property="og:description" itemprop="description" content="Drink beer? Get Beeer, the new beer journaling app that lets you keep track of all the amazing beers you've discovered. Share your best finds with friends or the entire Beeer community. How many beers can you collect?" />
+		<meta property="og:site_name" content="Beeer App | Available on iOS and Android devices" />
+		<meta property="og:image" content="http://wallofbeeer.com/i/pinterest.jpg" />
+		<meta property="og:url" content="http://wallofbeeer.com/"/>
+		<meta itemprop="name" content="Beeer" />
+		
+		<meta name="viewport" content="width=900, maximum-scale=1.0, user-scalable = yes">
+
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.9.2/jquery-ui.min.js"></script>		
+		<script src="js/raphael.js" type="text/javascript"></script>
+		
+		<link href='http://fonts.googleapis.com/css?family=Lato:400,300' rel='stylesheet' type='text/css'>
+		<script src="js/main.js" type="text/javascript"></script>
+		<link href='css/main.css' rel='stylesheet' type='text/css'>
+
+
+
+<script>
+
+$(".sort").live("click",function(e) {
+    grid($(e.target).attr("type"));
+});
+
+$(document).ready(function() {
+    // grid("rating");
+});
+
+function grid(sort)
+    {
+    // sort == [recent || rating || popular ]
+    if(!sort)
+        sort="recent";
+    $("#grid").html("");
+    $(".interactive_btn").css("backgroundPosition", "top left");
+    $("#btn_"+sort).css("backgroundPosition", "bottom left");
+
+
+
+    $.ajax({
+    	url: "grid2.php?do="+sort,
+    	success: function(data)
+    		{	
+    		var beer = $.parseJSON(data);
+            var append="";
+    		$(beer).each(function(idx, val) 
+                {
+                if(val.num>1) // aggregate
+                    {
+        			append += '<div class="beer aggregate">';
+                    }
+                else // single beer
+                    {
+        			append += '<div class="beer">';
+                    }
+                append += '<div class="name">' + val.name + '</div><div class="brewery">' + val.brewery + '</div><div class="stars' + Math.round(val.rat*2)/2 + '">' + Math.round(Number(val.rat)*2)/2 + 'stars.</div><img width="100" src="' + val.imageURL + '"></div>';
+                });
+            //$("#beeers").append(append);
+
+    		}
+        });		
+    }
+
+
+
+</script>
+
+	
+	</head>
+	<body>
+        <div id="beeer_detail_mask"></div>
+		<div id="top_bar">
+			<div id="wall_of_beer_logo_s"></div>
+            <div id="btn_back"></div>
+			<div id="btn_recent" class="interactive_btn"></div>
+			<div id="btn_rating" class="interactive_btn"></div>
+			<div id="btn_popular" class="interactive_btn"></div>
+			<div id="search_cont"><form><input id="search_input" type="text" value="Search Beeers" title="Search Beeers"></input></form></div>
+
+			<div id="btn_get_app" class="interactive_btn"></div>
+            <div id="wall_of_beer_about" class="interactive_btn">About</div>
+		</div>
+		<div id="get_bar">
+			<div id="get_button"></div>
+        </div>
+		<!--<div class="legal_block">
+			<h1 style="width:640px;">Coming Soon.</h1>
+		</div>-->
+		
+        
+		<div>
+			<ul id="beeers">
+			</ul>
+			<ul id="aggbeeers">
+			</ul>
+            <div id="othercontent"></div>
+		</div>
+		<div class="holder">
+  <div class="links">
+    <div class="link1"><a class="link ablink" target="about">About</a></div>
+    <br>
+    <div class="link2"><a class="explanation ablink" target="explanation">Explanation</a></div>
+    <br>
+    <div class="link3"><a class="tos ablink" target="tos">Terms of Services</a></div>
+    <br>
+    <div class="link4"><a class="privacy ablink" target="privacy">Privacy Policy</a></div>
+    <br>
+    <div class="copy">
+      <div class="about ab">
+      <h1>ABOUT</h1>
+        <p>Beeer is an all new way to keep track of the beers you've tried, and discover new ones. Our database of user reviewed beers is growing everyday and we'd love you to be a part of it. Whether you're just a beer fan or an avid taster, Beeer lets you keep track of, search and share, every detail of the brews you come across.</p> 
+<p>At it's core, Beeer is a simply designed and yet uber detailed beer journal. What makes it different, is the community of Beeer users. Every time a beer is recorded it becomes part of the WallofBeeer.com, accessible to anyone. This growing list of reviews allows you to find out all about what other people are drinking and what they thought of it.</p> 
+<p>Join Beeer today in our quest to try every beer in the world. </p>
+ </div>
+
+      <div class="explanation ab"> 
+      	<h1>EXPLANATION</h1>
+        <p>WallofBeeer.com posts entries from the Beeer app. Beers that have only a single entry are simply posted to the wall. If it has more then one, the information is combined into an aggregate profile, which shows up with an orange border. Information that is opinion based, such as rating and taste, is averaged, while information that based on facts, such as style, is majority ruled. </p>
+        <p>That's the basic functionality for now. Check back here in the future to see updates on features that we're working on. </p>
+</div>
+
+      <div class="tos ab">
+        <h1>TERMS OF USE</h1>
+        <p>These Terms of Use are effective on February 1st, 2013. By accessing or using the Wall of Beeer website (“Wall of Beeer”), the Wall of Beeer service, the mobile app Beeer (“Beeer”), or any applications (including mobile applications) made available by Space Pixel LLC (together, the "Service"), however accessed, you agree to be bound by these terms of use ("Terms of Use"). The Service is owned or controlled by Space Pixel LLC ("Space Pixel"). These Terms of Use affect your legal rights and obligations. If you do not agree to be bound by all of these Terms of Use, do not access or use the Service.</p>
+        <p>There may be times when we offer a special feature that has its own terms and conditions that apply in addition to these Terms of Use. In those cases, the terms specific to the special feature control to the extent there is a conflict with these Terms of Use.</p>
+        <p>ARBITRATION NOTICE: EXCEPT IF YOU OPT-OUT AND EXCEPT FOR CERTAIN TYPES OF DISPUTES DESCRIBED IN THE ARBITRATION SECTION BELOW, YOU AGREE THAT DISPUTES BETWEEN YOU AND SPACE PIXEL WILL BE RESOLVED BY BINDING, INDIVIDUAL ARBITRATION AND YOU WAIVE YOUR RIGHT TO PARTICIPATE IN A CLASS ACTION LAWSUIT OR CLASS-WIDE ARBITRATION.</p>
+        <h2>Basic Terms</h2>
+        <ol>
+          <li>You must be at least 17 years old to use the Service.</li>
+          <li>You may not post violent, nude, partially nude, discriminatory, unlawful, infringing, hateful, pornographic or sexually suggestive photos or other content via the Service.</li>
+          <li>You are responsible for any activity that occurs through your account and you agree you will not sell, transfer, license or assign your account, followers, username, or any account rights. With the exception of people or businesses that are expressly authorized to create accounts on behalf of their employers or clients, Space Pixel prohibits the creation of and you agree that you will not create an account for anyone other than yourself. You also represent that all information you provide or provided to Space Pixel upon registration and at all other times will be true, accurate, current and complete and you agree to update your information as necessary to maintain its truth and accuracy.</li>
+          <li>You agree that you will not solicit, collect or use the login credentials of other Beeer or Wall of Beeer users.</li>
+          <li>You are responsible for keeping your password secret and secure.</li>
+          <li>You must not defame, stalk, bully, abuse, harass, threaten, impersonate or intimidate people or entities and you must not post private or confidential information via the Service, including, without limitation, your or any other person's credit card information, social security or alternate national identity numbers, non-public phone numbers or non-public email addresses.</li>
+          <li>You may not use the Service for any illegal or unauthorized purpose. You agree to comply with all laws, rules and regulations (for example, federal, state, local and provincial) applicable to your use of the Service and your Content (defined below), including but not limited to, copyright laws.</li>
+          <li>You are solely responsible for your conduct and any data, text, files, information, usernames, images, graphics, photos, profiles, audio and video clips, sounds, musical works, works of authorship, applications, links and other content or materials (collectively, "Content") that you submit, post or display on or via the Service.</li>
+          <li>You must not change, modify, adapt or alter the Service or change, modify or alter another website so as to falsely imply that it is associated with the Service or Space Pixel.</li>
+          <li>You must not access ther Service’s private API by means other than those permitted by Space Pixel. </li>
+          <li>You must not create or submit unwanted email, comments, likes or other forms of commercial or harassing communications (a/k/a "spam") to any Beeer or Wall of Beeer users.</li>
+          <li>You must not use domain names or web URLs in your username without prior written consent from Space Pixel.</li>
+          <li>You must not interfere or disrupt the Service or servers or networks connected to the Service, including by transmitting any worms, viruses, spyware, malware or any other code of a destructive or disruptive nature. You may not inject content or code or otherwise alter or interfere with the way any Beeer or Wall of Beeer page is rendered or displayed in a user's browser or device.</li>
+          <li>You must comply with Wall of Beeer and Beeer’s Community Guidelines, available here: http://wallofbeeer.com/terms_of_service.html</li>
+          <li>You must not create accounts with the Service through unauthorized means, including but not limited to, by using an automated device, script, bot, spider, crawler or scraper.</li>
+          <li>You must not attempt to restrict another user from using or enjoying the Service and you must not encourage or facilitate violations of these Terms of Use or any other Beeer or Wall of Beeer terms.</li>
+          <li>Violation of these Terms of Use may, in Beeer or Wall of Beeer’s sole discretion, result in termination of your Space Pixel account. You understand and agree that Space Pixel cannot and will not be responsible for the Content posted on the Service and you use the Service at your own risk. If you violate the letter or spirit of these Terms of Use, or otherwise create risk or possible legal exposure for Space Pixel, we can stop providing all or part of the Service to you.</li>
+        </ol>
+        <h2>General Conditions</h2>
+        <ol>
+          <li>We reserve the right to modify or terminate the Service or your access to the Service for any reason, without notice, at any time, and without liability to you. If we terminate your access to the Service or you deactivate your account, your photos, and all other data will no longer be accessible through your account (e.g., users will not be able to navigate to your username and view your photos), but those materials and data may persist and appear within the Service.</li>
+          <li>Upon termination, all licenses and other rights granted to you in these Terms of Use will immediately cease.</li>
+          <li>We reserve the right, in our sole discretion, to change these Terms of Use ("Updated Terms") from time to time. Unless we make a change for legal or administrative reasons, we will provide reasonable advance notice before the Updated Terms become effective. You agree that we may notify you of the Updated Terms by posting them on the Service, and that your use of the Service after the effective date of the Updated Terms (or engaging in such other conduct as we may reasonably specify) constitutes your agreement to the Updated Terms. Therefore, you should review these Terms of Use and any Updated Terms before using the Service. The Updated Terms will be effective as of the time of posting, or such later date as may be specified in the Updated Terms, and will apply to your use of the Service from that point forward. These Terms of Use will govern any disputes arising before the effective date of the Updated Terms.</li>
+          <li>We reserve the right to refuse access to the Service to anyone for any reason at any time.</li>
+          <li>We reserve the right to force forfeiture of any username for any reason.</li>
+          <li>We may, but have no obligation to, remove, edit, block, and/or monitor Content or accounts containing Content that we determine in our sole discretion violates these Terms of Use.</li>
+          <li>You are solely responsible for your interaction with other users of the Service, whether online or offline. You agree that Space Pixel is not responsible or liable for the conduct of any user. Space Pixel reserves the right, but has no obligation, to monitor or become involved in disputes between you and other users. Exercise common sense and your best judgment when interacting with others, including when you submit or post Content or any personal or other information.</li>
+          <li>There may be links from the Service, or from communications you receive from the Service, to third-party web sites or features. There may also be links to third-party web sites or features in images or comments within the Service. The Service also includes third-party content that we do not control, maintain or endorse. Functionality on the Service may also permit interactions between the Service and a third-party web site or feature, including applications that connect the Service or your profile on the Service with a third-party web site or feature. For example, the Service may include a feature that enables you to share Content from the Service or your Content with a third party, which may be publicly posted on that third party's service or application. Using this functionality typically requires you to login to your account on the third-party service and you do so at your own risk. Space Pixel does not control any of these third-party web services or any of their content. You expressly acknowledge and agree that Space Pixel is in no way responsible or liable for any such third-party services or features. YOUR CORRESPONDENCE AND BUSINESS DEALINGS WITH THIRD PARTIES FOUND THROUGH THE SERVICE ARE SOLELY BETWEEN YOU AND THE THIRD PARTY. You may choose, at your sole and absolute discretion and risk, to use applications that connect the Service or your profile on the Service with a third-party service (each, an "Application") and such Application may interact with, connect to or gather and/or pull information from and to your Service profile. By using such Applications, you acknowledge and agree to the following: (i) if you use an Application to share information, you are consenting to information about your profile on the Service being shared; (ii) your use of an Application may cause personally identifying information to be publicly disclosed and/or associated with you, even if Space Pixel has not itself provided such information; and (iii) your use of an Application is at your own option and risk, and you will hold the Space Pixel Parties (defined below) harmless for activity related to the Application.</li>
+          <li>You agree that you are responsible for all data charges you incur through use of the Service.</li>
+          <li>We prohibit crawling, scraping, caching or otherwise accessing any content on the Service via automated means, including but not limited to, user profiles and photos (except as may be the result of standard search engine protocols or technologies used by a search engine with Space Pixel’s express consent).</li>
+        </ol>
+        <h2>Rights</h2>
+        <ol>
+          <li>Space Pixel does not claim ownership of any Content that you post on or through the Service. Instead, you hereby grant to Beeer or Wall of Beeer a non-exclusive, fully paid and royalty-free, transferable, sub-licensable, worldwide license to use the Content that you post on or through the Service, as described in the Service's Privacy Policy, available here: <a href="privacy_policy.html" target="_blank">Privacy Policy</a></li>
+          <li>Some or all of the Service may be supported by advertising revenue. To help us deliver interesting paid or sponsored content or promotions, you agree that a business or other entity may pay us to display your username, likeness, photos (along with any associated metadata), and/or actions you take, in connection with paid or sponsored content or promotions, without any compensation to you. If you are under the age of eighteen (18), or under any other applicable age of majority, you represent that at least one of your parents or legal guardians has also agreed to this provision (and the use of your name, likeness, username, and/or photos (along with any associated metadata)) on your behalf.</li>
+          <li>You acknowledge that we may not always identify paid services, sponsored content, or commercial communications as such.</li>
+          <li>You represent and warrant that: (i) you own the Content posted by you on or through the Service or otherwise have the right to grant the rights and licenses set forth in these Terms of Use; (ii) the posting and use of your Content on or through the Service does not violate, misappropriate or infringe on the rights of any third party, including, without limitation, privacy rights, publicity rights, copyrights, trademark and/or other intellectual property rights; (iii) you agree to pay for all royalties, fees, and any other monies owed by reason of Content you post on or through the Service; and (iv) you have the legal right and capacity to enter into these Terms of Use in your jurisdiction.</li>
+          <li>The Service contains content owned or licensed by Space Pixel ("Space Pixel Content"). Space Pixel Content is protected by copyright, trademark, patent, trade secret and other laws, and, as between you and Space Pixel, owns and retains all rights in the Space Pixel Content and the Service. You will not remove, alter or conceal any copyright, trademark, service mark or other proprietary rights notices incorporated in or accompanying the Space Pixel Content and you will not reproduce, modify, adapt, prepare derivative works based on, perform, display, publish, distribute, transmit, broadcast, sell, license or otherwise exploit the Space Pixel Content.</li>
+          <li>The Beeer and Wall of Beeer names and logos are trademarks of Space Pixel, and may not be copied, imitated or used, in whole or in part, without the prior written permission of Space Pixel. In addition, all page headers, custom graphics, button icons and scripts are service marks, trademarks and/or trade dress of Beeer and Wall of Beeer, and may not be copied, imitated or used, in whole or in part, without prior written permission from Space Pixel.</li>
+          <li>Although it is Space Pixel's intention for the Service to be available as much as possible, there will be occasions when the Service may be interrupted, including, without limitation, for scheduled maintenance or upgrades, for emergency repairs, or due to failure of telecommunications links and/or equipment. Also, Space Pixel reserves the right to remove any Content from the Service for any reason, without prior notice. Content removed from the Service may continue to be stored by Space Pixel, including, without limitation, in order to comply with certain legal obligations, but may not be retrievable without a valid court order. Consequently, Space Pixel encourages you to maintain your own backup of your Content. In other words, Beeer and Wall of Beeer are not backup services and you agree that you will not rely on the Service for the purposes of Content backup or storage. Space Pixel will not be liable to you for any modification, suspension, or discontinuation of the Services, or the loss of any Content. You also acknowledge that the Internet may be subject to breaches of security and that the submission of Content or other information may not be secure.</li>
+          <li>You agree that Space Pixel is not responsible for, and does not endorse, Content posted within the Service. Space Pixel does not have any obligation to prescreen, monitor, edit, or remove any Content. If your Content violates these Terms of Use, you may bear legal responsibility for that Content.</li>
+          <li>Except as otherwise described in the Service's Privacy Policy, available at : <a href="privacy_policy.html" target="_blank">Privacy Policy</a>, as between you and Space Pixel, any Content will be non-confidential and non-proprietary and we will not be liable for any use or disclosure of Content. You acknowledge and agree that your relationship with Space Pixel is not a confidential, fiduciary, or other type of special relationship, and that your decision to submit any Content does not place Space Pixel in a position that is any different from the position held by members of the general public, including with regard to your Content. None of your Content will be subject to any obligation of confidence on the part of Space Pixel, and Space Pixel will not be liable for any use or disclosure of any Content you provide.</li>
+          <li>It is Space Pixel’s policy not to accept or consider content, information, ideas, suggestions or other materials other than those we have specifically requested and to which certain specific terms, conditions and requirements may apply. This is to avoid any misunderstandings if your ideas are similar to those we have developed or are developing independently. Accordingly, Space Pixel does not accept unsolicited materials or ideas, and takes no responsibility for any materials or ideas so transmitted. If, despite our policy, you choose to send us content, information, ideas, suggestions, or other materials, you further agree that Space Pixel is free to use any such content, information, ideas, suggestions or other materials, for any purposes whatsoever, including, without limitation, developing and marketing products and services, without any liability or payment of any kind to you.</li>
+        </ol>
+        Violations of Copyright and Internet Protocal
+        <ol>
+          <li>We respect other people's rights, and expect you to do the same.</li>
+          <li>We provide you with tools to help you protect your intellectual property rights. To learn more about how to report claims of intellectual property infringement, visit: <a href="http://www.fbi.gov/about-us/investigate/white_collar/ipr/ipr" target="_blank">ABOUT IP THEFT</a></li>
+          <li>If you repeatedly infringe other people's intellectual property rights, we will disable your account when appropriate.</li>
+        </ol>
+        <h2>Warranties Disclaimer</h2>
+        <p>THE SERVICE, INCLUDING, WITHOUT LIMITATION, SPACE PIXEL CONTENT, IS PROVIDED ON AN "AS IS", "AS AVAILABLE" AND "WITH ALL FAULTS" BASIS. TO THE FULLEST EXTENT PERMISSIBLE BY LAW, NEITHER SPACE PIXEL NOR ANY OF ITS EMPLOYEES, MANAGERS, OFFICERS OR AGENTS (COLLECTIVELY, THE "SPACE PIXEL PARTIES") MAKE ANY REPRESENTATIONS OR WARRANTIES OR ENDORSEMENTS OF ANY KIND WHATSOEVER, EXPRESS OR IMPLIED, AS TO: (A) THE SERVICE; (B) THE SPACE PIXEL CONTENT; (C) USER CONTENT; OR (D) SECURITY ASSOCIATED WITH THE TRANSMISSION OF INFORMATION TO SPACE PIXEL OR VIA THE SERVICE. IN ADDITION, THE SPACE PIXEL PARTIES HEREBY DISCLAIM ALL WARRANTIES, EXPRESS OR IMPLIED, INCLUDING, BUT NOT LIMITED TO, THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, NON-INFRINGEMENT, TITLE, CUSTOM, TRADE, QUIET ENJOYMENT, SYSTEM INTEGRATION AND FREEDOM FROM COMPUTER VIRUS.</p>
+        <p>THE SPACE PIXEL PARTIES DO NOT REPRESENT OR WARRANT THAT THE SERVICE WILL BE ERROR-FREE OR UNINTERRUPTED; THAT DEFECTS WILL BE CORRECTED; OR THAT THE SERVICE OR THE SERVER THAT MAKES THE SERVICE AVAILABLE IS FREE FROM ANY HARMFUL COMPONENTS, INCLUDING, WITHOUT LIMITATION, VIRUSES. THE SPACE PIXEL PARTIES DO NOT MAKE ANY REPRESENTATIONS OR WARRANTIES THAT THE INFORMATION (INCLUDING ANY INSTRUCTIONS) ON THE SERVICE IS ACCURATE, COMPLETE, OR USEFUL. YOU ACKNOWLEDGE THAT YOUR USE OF THE SERVICE IS AT YOUR SOLE RISK. THE SPACE PIXEL PARTIES DO NOT WARRANT THAT YOUR USE OF THE SERVICE IS LAWFUL IN ANY PARTICULAR JURISDICTION, AND THE SPACE PIXEL PARTIES SPECIFICALLY DISCLAIM SUCH WARRANTIES. SOME JURISDICTIONS LIMIT OR DO NOT ALLOW THE DISCLAIMER OF IMPLIED OR OTHER WARRANTIES SO THE ABOVE DISCLAIMER MAY NOT APPLY TO YOU TO THE EXTENT SUCH JURISDICTION'S LAW IS APPLICABLE TO YOU AND THESE TERMS OF USE.</p>
+        <p>BY ACCESSING OR USING THE SERVICE YOU REPRESENT AND WARRANT THAT YOUR ACTIVITIES ARE LAWFUL IN EVERY JURISDICTION WHERE YOU ACCESS OR USE THE SERVICE.</p>
+        <p>THE SPACE PIXEL PARTIES DO NOT ENDORSE CONTENT AND SPECIFICALLY DISCLAIM ANY RESPONSIBILITY OR LIABILITY TO ANY PERSON OR ENTITY FOR ANY LOSS, DAMAGE (WHETHER ACTUAL, CONSEQUENTIAL, PUNITIVE OR OTHERWISE), INJURY, CLAIM, LIABILITY OR OTHER CAUSE OF ANY KIND OR CHARACTER BASED UPON OR RESULTING FROM ANY CONTENT.</p>
+        <h2>Waiver; Limitation of Liability</h2>
+        <p>UNDER NO CIRCUMSTANCES WILL THE SPACE PIXEL PARTIES BE LIABLE TO YOU FOR ANY LOSS OR DAMAGES OF ANY KIND (INCLUDING, WITHOUT LIMITATION, FOR ANY DIRECT, INDIRECT, ECONOMIC, EXEMPLARY, SPECIAL, PUNITIVE, INCIDENTAL OR CONSEQUENTIAL LOSSES OR DAMAGES) THAT ARE DIRECTLY OR INDIRECTLY RELATED TO: (A) THE SERVICE; (B) THE SPACE PIXEL CONTENT; (C) USER CONTENT; (D) YOUR USE OF, INABILITY TO USE, OR THE PERFORMANCE OF THE SERVICE; (E) ANY ACTION TAKEN IN CONNECTION WITH AN INVESTIGATION BY THE SPACE PIXEL PARTIES OR LAW ENFORCEMENT AUTHORITIES REGARDING YOUR OR ANY OTHER PARTY'S USE OF THE SERVICE; (F) ANY ACTION TAKEN IN CONNECTION WITH COPYRIGHT OR OTHER INTELLECTUAL PROPERTY OWNERS; (G) ANY ERRORS OR OMISSIONS IN THE SERVICE'S OPERATION; OR (H) ANY DAMAGE TO ANY USER'S COMPUTER, MOBILE DEVICE, OR OTHER EQUIPMENT OR TECHNOLOGY INCLUDING, WITHOUT LIMITATION, DAMAGE FROM ANY SECURITY BREACH OR FROM ANY VIRUS, BUGS, TAMPERING, FRAUD, ERROR, OMISSION, INTERRUPTION, DEFECT, DELAY IN OPERATION OR TRANSMISSION, COMPUTER LINE OR NETWORK FAILURE OR ANY OTHER TECHNICAL OR OTHER MALFUNCTION, INCLUDING, WITHOUT LIMITATION, DAMAGES FOR LOST PROFITS, LOSS OF GOODWILL, LOSS OF DATA, WORK STOPPAGE, ACCURACY OF RESULTS, OR COMPUTER FAILURE OR MALFUNCTION, EVEN IF FORESEEABLE OR EVEN IF THE SPACE PIXEL PARTIES HAVE BEEN ADVISED OF OR SHOULD HAVE KNOWN OF THE POSSIBILITY OF SUCH DAMAGES, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE, STRICT LIABILITY OR TORT (INCLUDING, WITHOUT LIMITATION, WHETHER CAUSED IN WHOLE OR IN PART BY NEGLIGENCE, ACTS OF GOD, TELECOMMUNICATIONS FAILURE, OR THEFT OR DESTRUCTION OF THE SERVICE). IN NO EVENT WILL THE SPACE PIXEL PARTIES BE LIABLE TO YOU OR ANYONE ELSE FOR LOSS, DAMAGE OR INJURY, INCLUDING, WITHOUT LIMITATION, DEATH OR PERSONAL INJURY. SOME STATES DO NOT ALLOW THE EXCLUSION OR LIMITATION OF INCIDENTAL OR CONSEQUENTIAL DAMAGES, SO THE ABOVE LIMITATION OR EXCLUSION MAY NOT APPLY TO YOU. YOU AGREE THAT IN THE EVENT YOU INCUR ANY DAMAGES, LOSSES OR INJURIES THAT ARISE OUT OF SPACE PIXEL'S ACTS OR OMISSIONS, THE DAMAGES, IF ANY, CAUSED TO YOU ARE NOT IRREPARABLE OR SUFFICIENT TO ENTITLE YOU TO AN INJUNCTION PREVENTING ANY EXPLOITATION OF ANY WEB SITE, SERVICE, PROPERTY, PRODUCT OR OTHER CONTENT OWNED OR CONTROLLED BY THE SPACE PIXEL PARTIES, AND YOU WILL HAVE NO RIGHTS TO ENJOIN OR RESTRAIN THE DEVELOPMENT, PRODUCTION, DISTRIBUTION, ADVERTISING, EXHIBITION OR EXPLOITATION OF ANY WEB SITE, PROPERTY, PRODUCT, SERVICE, OR OTHER CONTENT OWNED OR CONTROLLED BY THE SPACE PIXEL PARTIES.</p>
+        <p>BY ACCESSING THE SERVICE, YOU UNDERSTAND THAT YOU MAY BE WAIVING RIGHTS WITH RESPECT TO CLAIMS THAT ARE AT THIS TIME UNKNOWN OR UNSUSPECTED, AND IN ACCORDANCE WITH SUCH WAIVER, YOU ACKNOWLEDGE THAT YOU HAVE READ AND UNDERSTAND, AND HEREBY EXPRESSLY WAIVE, THE BENEFITS OF SECTION 1542 OF THE CIVIL CODE OF CALIFORNIA, AND ANY SIMILAR LAW OF ANY STATE OR TERRITORY, WHICH PROVIDES AS FOLLOWS: "A GENERAL RELEASE DOES NOT EXTEND TO CLAIMS WHICH THE CREDITOR DOES NOT KNOW OR SUSPECT TO EXIST IN HIS FAVOR AT THE TIME OF EXECUTING THE RELEASE, WHICH IF KNOWN BY HIM MUST HAVE MATERIALLY AFFECTED HIS SETTLEMENT WITH THE DEBTOR."</p>
+        <p>SPACE PIXEL IS NOT RESPONSIBLE FOR THE ACTIONS, CONTENT, INFORMATION, OR DATA OF THIRD PARTIES, AND YOU RELEASE US, OUR DIRECTORS, OFFICERS, EMPLOYEES, AND AGENTS FROM ANY CLAIMS AND DAMAGES, KNOWN AND UNKNOWN, ARISING OUT OF OR IN ANY WAY CONNECTED WITH ANY CLAIM YOU HAVE AGAINST ANY SUCH THIRD PARTIES.</p>
+        <h2>Indemnification</h2>
+        <p>You (and also any third party for whom you operate an account or activity on the Service) agree to defend (at Space Pixel's request), indemnify and hold the Space Pixel Parties harmless from and against any claims, liabilities, damages, losses, and expenses, including without limitation, reasonable attorney's fees and costs, arising out of or in any way connected with any of the following (including as a result of your direct activities on the Service or those conducted on your behalf): (i) your Content or your access to or use of the Service; (ii) your breach or alleged breach of these Terms of Use; (iii) your violation of any third-party right, including without limitation, any intellectual property right, publicity, confidentiality, property or privacy right; (iv) your violation of any laws, rules, regulations, codes, statutes, ordinances or orders of any governmental and quasi-governmental authorities, including, without limitation, all regulatory, administrative and legislative authorities; or (v) any misrepresentation made by you. You will cooperate as fully required by Space Pixel in the defense of any claim. Space Pixel reserves the right to assume the exclusive defense and control of any matter subject to indemnification by you, and you will not in any event settle any claim without the prior written consent of Space Pixel.</p>
+        <h2>Arbitration</h2>
+        <p>Except if you opt-out or for disputes relating to: (1) your or Space Pixel's intellectual property (such as trademarks, trade dress, domain names, trade secrets, copyrights and patents); (2) violations of the API Terms; or (3) violations of provisions 13 or 15 of the Basic Terms, above ("Excluded Disputes"), you agree that all disputes between you and Space Pixel (whether or not such dispute involves a third party) with regard to your relationship with Space Pixel, including without limitation disputes related to these Terms of Use, your use of the Service, and/or rights of privacy and/or publicity, will be resolved by binding, individual arbitration under the American Arbitration Association's rules for arbitration of consumer-related disputes and you and Space Pixel hereby expressly waive trial by jury. As an alternative, you may bring your claim in your local "small claims" court, if permitted by that small claims court's rules. You may bring claims only on your own behalf. Neither you nor Space Pixel will participate in a class action or class-wide arbitration for any claims covered by this agreement. You also agree not to participate in claims brought in a private attorney general or representative capacity, or consolidated claims involving another person's account, if Space Pixel is a party to the proceeding. This dispute resolution provision will be governed by the Federal Arbitration Act. In the event the American Arbitration Association is unwilling or unable to set a hearing date within one hundred and sixty (160) days of filing the case, then either Space Pixel or you can elect to have the arbitration administered instead by the Judicial Arbitration and Mediation Services. Judgment on the award rendered by the arbitrator may be entered in any court having competent jurisdiction. Any provision of applicable law notwithstanding, the arbitrator will not have authority to award damages, remedies or awards that conflict with these Terms of Use.</p>
+        <p>You may opt out of this agreement to arbitrate. If you do so, neither you nor Space Pixel can require the other to participate in an arbitration proceeding. To opt out, you must notify Space Pixel in writing within 30 days of the date that you first became subject to this arbitration provision. If the prohibition against class actions and other claims brought on behalf of third parties contained above is found to be unenforceable, then all of the preceding language in this Arbitration section will be null and void. This arbitration agreement will survive the termination of your relationship with Space Pixel.</p>
+        <h2>Limitation on Claims</h2>
+        <p>You agree that any claim you may have arising out of or related to your relationship with Space Pixel must be filed within six months after such claim arose; otherwise, your claim is permanently barred.</p>
+        <h2>Governing Law and Venue</h2>
+        <p>These Terms of Use are governed by and construed in accordance with the laws of the State of California, without giving effect to any principles of conflicts of law AND WILL SPECIFICALLY NOT BE GOVERNED BY THE UNITED NATIONS CONVENTIONS ON CONTRACTS FOR THE INTERNATIONAL SALE OF GOODS, IF OTHERWISE APPLICABLE. For any action at law or in equity relating to the arbitration provision of these Terms of Use, the Excluded Disputes or if you opt out of the agreement to arbitrate, you agree to resolve any dispute you have with Space Pixel exclusively in a state or federal court located in Los Angeles, California, and to submit to the personal jurisdiction of the courts located in Los Angeles County for the purpose of litigating all such disputes.</p>
+        <p>If any provision of these Terms of Use is held to be unlawful, void, or for any reason unenforceable during arbitration or by a court of competent jurisdiction, then that provision will be deemed severable from these Terms of Use and will not affect the validity and enforceability of any remaining provisions. Space Pixel's failure to insist upon or enforce strict performance of any provision of these Terms will not be construed as a waiver of any provision or right. No waiver of any of these Terms will be deemed a further or continuing waiver of such term or condition or any other term or condition. Space Pixel reserves the right to change this dispute resolution provision, but any such changes will not apply to disputes arising before the effective date of the amendment. This dispute resolution provision will survive the termination of any or all of your transactions with Space Pixel.</p>
+        <h2>Entire Agreement</h2>
+        <p>If you are using the Service on behalf of a legal entity, you represent that you are authorized to enter into an agreement on behalf of that legal entity. These Terms of Use constitute the entire agreement between you and Space Pixel and governs your use of the Service, superseding any prior agreements between you and Space Pixel. You will not assign the Terms of Use or assign any rights or delegate any obligations hereunder, in whole or in part, whether voluntarily or by operation of law, without the prior written consent of Space Pixel. Any purported assignment or delegation by you without the appropriate prior written consent of Space Pixel will be null and void. Space Pixel may assign these Terms of Use or any rights hereunder without your consent. If any provision of these Terms of Use is found by a court of competent jurisdiction to be invalid or otherwise unenforceable, the parties nevertheless agree that such portion will be deemed severable from these Terms of Use and will not affect the validity and enforceability of the remaining provisions, and the remaining provisions of the Terms of Use remain in full force and effect. Neither the course of conduct between the parties nor trade practice will act to modify the Terms of Use. These Terms of Use do not confer any third-party beneficiary rights.</p>
+        <h2>Territorial Restrictions</h2>
+        <p>The information provided within the Service is not intended for distribution to or use by any person or entity in any jurisdiction or country where such distribution or use would be contrary to law or regulation or which would subject Space Pixel to any registration requirement within such jurisdiction or country. We reserve the right to limit the availability of the Service or any portion of the Service, to any person, geographic area, or jurisdiction, at any time and in our sole discretion, and to limit the quantities of any content, program, product, service or other feature that  provides.</p>
+        <p>Software related to or made available by the Service may be subject to United States export controls. Thus, no software from the Service may be downloaded, exported or re-exported: (a) into (or to a national or resident of) any country to which the United States has embargoed goods; or (b) to anyone on the U.S. Treasury Department's list of Specially Designated Nationals or the U.S. Commerce Department's Table of Deny Orders. By downloading any software related to the Service, you represent and warrant that you are not located in, under the control of, or a national or resident of, any such country or on any such list.</p>
+        <p>The effective date of these Terms of Use is February 1st, 2013. These Terms of Use were written in English (US). To the extent any translated version of these Terms of Use conflicts with the English version, the English version controls.</p>
+        <p>By using the Wall of Beeer website and Beeer App you are agreeing to be bound by the following terms and conditions ("Terms of Use").</p>
+        <h2>Participation in Promotions</h2>
+        <p>From time to time, this site may include advertisements offered by third parties. You may enter into correspondence with or participate in promotions of the advertisers showing their products on this site. Any such correspondence or promotions, including the delivery of and the payment for goods and services, and any other terms, conditions, warranties or representations associated with such correspondence or promotions, are solely between you and the advertiser. We assume no liability, obligation or responsibility for any part of any such correspondence or promotion.</p>
+        <h2>International Use</h2>
+        <p>Although this site and Space Pixel Services may be accessible worldwide, we make no representation that materials on this site are appropriate or available for use in locations outside the United States, and accessing them from territories where their contents are illegal is prohibited. Those who choose to access this site from other locations do so on their own initiative and are responsible for compliance with local laws. Any offer for any product, service, and/or information made in connection with this site is void where prohibited.</p>
+        <h2>Additional Information</h2>
+        <p>Space Pixel does not condone or support binge/excessive drinking and Space Pixel is not responsible for any activities that are the direct or indirect consequences of drinking alcohol and/or using this service. Please drink and use Space Pixel Services responsibly.</p>
+      </div>
+      
+      <div class="privacy ab">
+        <h1>PRIVACY POLICY</h1>
+        <p>When using Space Pixel LLC (“Space Pixel”) Services such as but not limited too Beeer App (“Beeer”) and the website Wall of Beeer, Space Pixel may collect certain information. When you visit the Wall of Beeer website we collect the following information:</p>
+        <ul>
+          <li>The name of the domain from which you access the Internet</li>
+          <li>The date and time you access our site</li>
+          <li>The Internet address of the website you used to link directly to our site.</li>
+          <li>The location where to you access the website from.</li>
+        </ul>
+        <p>When you sign up for an account with Beeer we keep only the information you provide to us and will not use it to solicit other unaffiliated third party products or services to you. Space Pixel will never obtain personally identifying information unless volunteered by the user. Any personal information obtained by Space Pixel whether intentional or unintentional, will never be sold or transferred to unaffiliated third parties without the approval of the user. At times we may use software to gather statistics about the habits of our users for marketing data and to enhance the experience, and functionality of and throughout Space Pixel Services.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+		
+		<div id="beeer_detail" class="drop-shadow curved curved-hz-1">
+			<div id="beeer_detail_close"></div>
+			<div id="beeer_detail_name"></div>
+			<div id="beeer_detail_brewery"></div>
+			<div id="beeer_detail_type"></div>
+			<div id="beeer_detail_rating">
+				<ul class="star_rating"></ul>
+			</div>
+			<div id="beeer_detail_stats">
+				<div id="beeer_detail_abv">
+					<h5></h5>
+					<h6>ABV</h6>
+				</div>
+				<div id="beeer_detail_ibu">
+					<h5></h5>
+					<h6>IBU</h6>
+				</div>	
+				<div id="beeer_detail_og">
+					<h5></h5>
+					<h6>OG</h6>
+				</div>
+				<div id="beeer_detail_tg">
+					<h5></h5>
+					<h6>TG</h6>
+				</div>
+			</div>
+			<div id="beeer_detail_serving">
+				<div id="beeer_detail_serving_bottle">
+					<div class="sq_radio sq_radio_unselected"></div>
+					<h7>Bottle</h7>
+				</div>
+				
+				<div id="beeer_detail_serving_can">
+					<div class="sq_radio sq_radio_unselected"></div>
+					<h7>Can</h7>
+				</div>
+				
+				<div id="beeer_detail_serving_draft">
+					<div class="sq_radio sq_radio_unselected"></div>
+					<h7>Draft</h7>
+				</div>
+				
+				<div id="beeer_detail_serving_growler">
+					<div class="sq_radio sq_radio_unselected"></div>
+					<h7>Growler</h7>
+				</div>
+				
+				<div id="beeer_detail_serving_cask">
+					<div class="sq_radio sq_radio_unselected"></div>
+					<h7>Cask</h7>
+				</div>
+			</div>
+			<div id="beeer_detail_wheel">
+				<h8>Beeer Wheel</h8>
+				<div id="beer_graph"><svg style="overflow: hidden; position: relative;" height="238" version="1.1" width="238" xmlns="http://www.w3.org/2000/svg"><desc style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">Created with Raphaël 2.1.0</desc><defs style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></defs><path style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);" fill="#c34e00" stroke="#c34e00" d="M119,77L147,71L131,112L161,119L167,148L154,181L119,162L104,144L82,141L62,120L82,98L104,95Z" stroke-width="1"></path></svg></div>
+				<div id="beer_labels"></div>
+				<ul id="beeer_wheel_dots">
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+				</ul>
+				<div id="beer_lattice"></div>
+			</div>
+			<div id="beeer_detail_photo"><img src=""></div>
+			<div id="beeer_detail_desc"></div>
+		</div>
+
+		
+		<p class="clear_both">Drink beer? Get Beeer, the new beer journaling app that lets you keep track of all the amazing beers you've discovered. Share your best finds with friends or the entire Beeer community. How many beers can you collect?</p>
+		<!-- Google Analytics -->
+		<script type="text/javascript">
+		
+		  var _gaq = _gaq || [];
+		  _gaq.push(['_setAccount', 'UA-37794697-1']);
+		  _gaq.push(['_trackPageview']);
+		
+		  (function() {
+		    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+		    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+		    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+		  })();
+		
+		</script>
+	</body>
+</html>

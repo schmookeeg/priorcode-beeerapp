@@ -1,0 +1,318 @@
+$(document).ready(function() {
+
+	fadeItem();
+	var userID = 1124451366;
+	
+	$('input#search_input').live({
+		keyup: function() {
+			pullSearchBeers(userID,$('#search_cont form input#search_input').val());
+		},
+		focus: function() {
+			if($('input#search_input').val()=='Search Beeers') {
+				$('input#search_input').val('');
+			}
+		}
+	});
+	
+	$(".interactive_btn").hover(function () {
+	    $(this).css("backgroundPosition", "bottom left");
+	}, function () {
+	    $(this).css("backgroundPosition", "top left");
+	});
+
+	$("#btn_recent").live({
+		click: function() { pullRecentBeers(userID); }
+	});
+	$("#btn_rating").live({
+		click: function() { pullRatingBeers(userID); }
+	});
+	$("#btn_popular").live({
+		click: function() { pullPopularBeers(userID); }
+	});
+	
+	$(".beeer_frame").live({
+        mouseenter:
+           function()
+           {
+				$(this).children(".img_cont").removeClass("fifty_per_opacity");
+           },
+		mouseleave:
+			function()
+			{
+				$(this).children(".img_cont").addClass("fifty_per_opacity");
+			},
+		click:
+			function()
+			{
+				var beerID = $(this).data('beerID');
+				var beerName = $(this).data('beerName');
+				loadBeerDetailData(userID,beerName);
+				//alert(beerID);
+		}
+       }
+    );		
+
+	$('#beeer_detail_close').click(function() {
+		$('#beeer_detail').hide();
+	});
+	
+	pullRecentBeers(userID);
+});
+
+var input = $('input[type=text]');
+
+input.focus(function() {
+    $(this).val('');
+}).blur(function() {
+    var el = $(this);
+
+    /* use the elements title attribute to store the 
+       default text - or the new HTML5 standard of using
+       the 'data-' prefix i.e.: data-default="some default" */
+    if(el.val() == '')
+        el.val(el.attr('title'));
+});
+
+
+function fadeItem() 
+{
+   $('#entries ul li:hidden:first').fadeIn(350, fadeItem);  
+}
+
+function parseBeerWheel(wheelData) {
+
+	$('#beer_graph').empty();
+	
+	var paper = new Raphael(document.getElementById('beer_graph'), 238, 238);      
+	
+	var center_x = 238/2;
+	var center_y = 238/2;
+    
+	pointArray = [];
+	pointArray[0] = wheelData.bitter;
+	pointArray[1] = wheelData.body;
+	pointArray[2] = wheelData.linger;
+	pointArray[3] = wheelData.aroma;
+	pointArray[4] = wheelData.citrus;
+	pointArray[5] = wheelData.hoppy;
+	pointArray[6] = wheelData.floral;
+	pointArray[7] = wheelData.malty;
+	pointArray[8] = wheelData.toffee;
+	pointArray[9] = wheelData.burnt;
+	pointArray[10] = wheelData.sweet;
+	pointArray[11] = wheelData.sour;
+	
+	var radius = 226 / 2;
+	var twoPI = Math.PI * 2 ;
+	var xValue;
+	var yValue;
+	
+	var serialized_points_arr = "M ";
+	
+	for (var i = 0; i < 12; i++) {
+		
+		var deg = (360 / 12) *  (i);
+		var rad = deg * (Math.PI / 180);
+		
+		xValue = Math.floor( Math.sin( rad ) * (radius * (pointArray[i] *.25)) );
+		yValue = Math.floor( Math.cos( rad ) * (radius * (pointArray[i] *.25)) ) * -1;
+		
+		serialized_points_arr += xValue + center_x;
+		serialized_points_arr += " ";
+		serialized_points_arr += (yValue + center_y);// * -1;
+		
+		$('#beeer_wheel_dots li:eq('+( i)+')').css({
+			top: (yValue + center_y - 3.5)+"px",
+			left: (xValue + center_x - 3.5)+"px"
+		})
+		
+		if(i == 11)
+		{
+			serialized_points_arr += " Z ";
+		}else
+		{
+			serialized_points_arr += " L ";
+		}
+		
+	}
+	
+	var flavor = paper.path(serialized_points_arr);
+	flavor.attr({fill: '#c34e00', stroke: '#c34e00', 'stroke-width': 1});
+	
+}
+
+function parseServing(servingSize) {
+	$('#beeer_detail_serving_'+servingSize+' div').addClass('sq_radio_selected');
+}
+
+function parseBeerRating(starNum)
+{
+	var stars = '';
+	for (var i=0;i<10;i++) {
+		if(i < starNum) {
+			stars = stars + '<li class="rating_on"></li>';
+		} else {		
+			stars = stars + '<li class="rating_off"></li>';
+		}
+	}
+	return stars;
+}
+
+function parseBeerDetail(jsonData) 
+{
+	var jData = $.parseJSON(jsonData);
+	var beer = jData.beerArray;
+	var stars;
+
+	$('#beeer_detail_name').html(beer.name);
+	$('#beeer_detail_brewery').html(beer.brewery);
+	$('#beeer_detail_type').html(beer.style);
+	
+	var stars = parseBeerRating(beer.rating);
+	$('#beeer_detail_rating ul.star_rating').html(stars);
+
+	$('#beeer_detail_abv h5').html(beer.abv+'%');
+	$('#beeer_detail_ibu h5').html(beer.ibu+'%');
+	$('#beeer_detail_og h5').html(beer.og+'%');
+	$('#beeer_detail_tg h5').html(beer.tg+'%');
+	
+	$('.sq_radio').removeClass('sq_radio_selected');
+	$('.sq_radio').addClass('sq_radio_unselected');
+	$('#beeer_detail_serving_'+beer.serving+' .sq_radio').removeClass('sq_radio_unselected');
+	$('#beeer_detail_serving_'+beer.serving+' .sq_radio').addClass('sq_radio_selected');
+	
+	wheelObj = new Object();
+	wheelObj.bitter = beer.bitter;
+	wheelObj.body = beer.body;
+	wheelObj.linger = beer.linger;
+	wheelObj.aroma = beer.aroma;
+	wheelObj.citrus = beer.citrus;
+	wheelObj.hoppy = beer.hoppy;
+	wheelObj.floral = beer.floral;
+	wheelObj.malty = beer.malty;
+	wheelObj.toffee = beer.toffee;
+	wheelObj.burnt = beer.burnt;
+	wheelObj.sweet = beer.sweet;
+	wheelObj.sour = beer.sour;
+	parseBeerWheel(wheelObj);
+
+	$('#beeer_detail_photo img').attr('src',beer.photoURL);
+	
+	$('#beeer_detail_desc').html(beer.notes);
+	
+	$('#beeer_detail').show();
+	
+}
+/*
+function parseBeerFrame(jsonData) 
+{
+	var jData = $.parseJSON(jsonData);
+	var beer = jData.beerArray;
+	var stars;
+
+	$('#beeer_detail_name').html(beer.name);
+	$('#beeer_detail_brewery').html(beer.brewery);
+	$('.img_cont').attr('src',beer.photoURL);
+		
+	var stars = parseBeerRating(beer.rating);
+	$('ul.star_rating').html(stars);
+		
+}
+*/
+function buildBeerList(resp)
+	{
+			$('ul#beeers li').hide();
+			$('ul#beeers').empty();
+			
+			$.get('index_beerFrame.html', function(beerFrameTmpl) {
+
+				$('ul#beeers').html(beerFrameTmpl);
+				var jsonData = $.parseJSON(resp);				
+		
+				if(jsonData != null)
+				{
+					for (var c = 1; c < jsonData.beerArray.length; c++)
+					{	
+						$('ul#beeers').find('li.beeer_frame:first').clone(true).appendTo($('ul#beeers'));
+					}
+					if(jsonData.beerArray.length>0)
+					{
+						var beersFrames = $('ul#beeers').find('li.beeer_frame');
+						beersFrames.each(function(i){
+							$(this).attr("title",jsonData.beerArray[i].name); 
+							$(this).data('beerID',jsonData.beerArray[i].id);
+							$(this).data('beerName',jsonData.beerArray[i].name);
+							$(this).find(".img_cont img").attr('src',jsonData.beerArray[i].photoURL);
+							$(this).find(".lable_cont h3").html(jsonData.beerArray[i].name);
+							$(this).find(".lable_cont h4").html(jsonData.beerArray[i].brewery);
+							var stars = parseBeerRating(jsonData.beerArray[i].rating);
+							$(this).find('ul.star_rating').html(stars);
+						});
+						$('ul#beeers li').show();
+					}
+				}
+		
+			});
+	}
+
+function pullRecentBeers(userID) 
+    {
+		asyncService("services.php", "do=getBeersRecent&userID="+userID, function(resp){
+			//alert("RESPONSE: "+resp);
+			buildBeerList(resp)
+		});
+    }
+
+function pullRatingBeers(userID) 
+    {
+		asyncService("services.php", "do=getBeersRating&userID="+userID, function(resp){
+			//alert("RESPONSE: "+resp);
+			buildBeerList(resp)
+		});
+    }
+
+function pullPopularBeers(userID) 
+    {
+		asyncService("services.php", "do=getBeersPopular&userID="+userID, function(resp){
+			//alert("RESPONSE: "+resp);
+			buildBeerList(resp)
+		});
+    }
+
+function pullSearchBeers(userID,beerName) 
+    {
+		asyncService("services.php", "do=getBeersSearch&userID="+userID+"&beerName="+beerName, function(resp){
+			//alert("RESPONSE: "+resp);
+			buildBeerList(resp)
+		});
+    }
+
+function loadBeerDetailData(userID,beerName) 
+	{
+		asyncService("services.php", "do=getBeer&userID="+userID+"&beerName="+beerName, function(resp){
+			//alert("RESPONSE: "+resp);
+			parseBeerDetail(resp);
+			});
+	}
+
+var asyncService = function(targetWebservice, parameters, callback)
+{
+    $.post(targetWebservice, parameters,
+        function(response)
+        {
+            if(typeof callback == 'function')
+            {
+            	try
+                  {
+                    callback(eval(response));
+                  }
+                catch(err)
+                  {
+                    callback(response);
+                  }
+
+            }
+        }
+    );
+}
+
